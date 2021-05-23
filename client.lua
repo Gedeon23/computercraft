@@ -61,3 +61,7 @@ while true do
         SendLoop(command['ip'], command['kind'], command['bool'], command['side'])
     end
 end
+
+-- TODO
+-- split functions into single files with commands.txt as db
+-- use args instead | example at https://github.com/seriallos/computercraft/blob/master/github.lua
