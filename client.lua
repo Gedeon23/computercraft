@@ -5,7 +5,7 @@ Index['darkmode'] = {ip = 17, kind = 'pulse', bool = true, side = 'bottom'}
 function Request(ip, bool, side)
     print(side, bool)
     rednet.send(ip, {side, bool}, 'command')
-    print(string.format('sent signal %s to device %s', tostrin(bool), ip))
+    print(string.format('sent signal %s to device %s', tostring(bool), ip))
 end
 
 function SendLoop(ip , kind, bool, side)
