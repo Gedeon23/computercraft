@@ -1,6 +1,8 @@
+-- Variables
 -- functions
-Index = {}
-Index['darkmode'] = {ip = 17, kind = 'pulse', bool = true, side = 'bottom'}
+local rawIndex = fs.open('commands.txt', 'r')
+Index = textutils.unserialise(rawIndex.readAll())
+rawIndex.close()
 
 function Request(ip, bool, side)
     print(side, bool)
@@ -31,7 +33,20 @@ function NewCommand()
     bool = read() == 'true'
     print('side')
     side = read()
+    if kind == 'toggle' then
+        print('would you like to add a command for', not bool, '(y|n)')
+        if read() == 'y' then
+            print('what should that command be?')
+            command2 = read()
+            Index[command2] = {ip=ip, kind=kind, bool=not bool, side=side}
+            print('second command for ', not bool, ' has been added')
+        end
+    end
     Index[command] = {ip=ip, kind=kind, bool=bool, side=side}
+    local commands = fs.open('commands.txt', 'w')
+    local data = textutils.serialise(Index)
+    commands.write(data)
+    commands.close()
 end
 -- mainloop
 rednet.open('back') 
