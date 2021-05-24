@@ -7,7 +7,7 @@ end
 
 
 local data = fs.open('state.lua', 'r')
-State = textutils.unserialise(data)
+State = textutils.unserialise(data.readAll())
 data.close()
 
 
