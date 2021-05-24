@@ -1,8 +1,6 @@
 -- Variables
 -- functions
-local rawIndex = fs.open('commands.txt', 'r')
-Index = textutils.unserialise(rawIndex.readAll())
-rawIndex.close()
+
 
 function Request(ip, bool, side)
     print(side, bool)
@@ -22,45 +20,37 @@ function SendLoop(ip , kind, bool, side)
     sleep(1)
 end
 
-function NewCommand()
-    print('command?')
-    command = read()
-    print('ip?') 
-    ip = tonumber(read())
-    print('type?')
-    kind = read()
-    print('bool?')
-    bool = read() == 'true'
-    print('side')
-    side = read()
-    if kind == 'toggle' then
-        print('would you like to add a command for', not bool, '(y|n)')
-        if read() == 'y' then
-            print('what should that command be?')
-            command2 = read()
-            Index[command2] = {ip=ip, kind=kind, bool=not bool, side=side}
-            print('second command for ', not bool, ' has been added')
-        end
-    end
-    Index[command] = {ip=ip, kind=kind, bool=bool, side=side}
-    local commands = fs.open('commands.txt', 'w')
-    local data = textutils.serialise(Index)
-    commands.write(data)
-    commands.close()
-end
 -- mainloop
+local tArgs = { ... }
+
+if (#tArgs ~= 1) then
+  print( "USAGE: cmd <DEVICE-NAME> <SIGNAL (optional)>" )
+  return
+end
+
+local deviceName = tArgs[1]
+local signal = tArgs[2]
+
+local rawIndex = fs.open('devices.lua', 'r')
+Index = textutils.unserialise(rawIndex.readAll())
+rawIndex.close()
+
 rednet.open('back') 
 
-while true do 
-    print('>')
-    Input = read()
-    if Input == 'new' then
-        NewCommand()
-    else
-        local command = Index[Input]
-        SendLoop(command['ip'], command['kind'], command['bool'], command['side'])
-    end
+local device = Index[deviceName]
+
+if signal == 'on' then
+    local bool = device.bool
+    local kind = 'toggle'
+elseif signal == 'off' then
+    local bool = not device.bool
+    local kind = 'toggle'
+elseif signal == nil then
+    local bool = true
+    local kind = 'pulse'
 end
+
+SendLoop(device['ip'], kind, bool, device['side'])
 
 -- TODO
 -- split functions into single files with commands.txt as db
