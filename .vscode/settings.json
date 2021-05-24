@@ -6,7 +6,9 @@
         "redstone",
         "rednet",
         "peripheral",
-        "clear"
+        "clear",
+        "fs",
+        "textutils"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
