@@ -40,17 +40,17 @@ rednet.open('back')
 local device = Index[deviceName]
 
 if signal == 'on' then
-    local bool = device.bool
-    local kind = 'toggle'
+    Bool = device.bool
+    Kind = 'toggle'
 elseif signal == 'off' then
-    local bool = not device.bool
-    local kind = 'toggle'
+    Bool = not device.bool
+    Kind = 'toggle'
 elseif signal == nil then
-    local bool = true
-    local kind = 'pulse'
+    Bool = true
+    Kind = 'pulse'
 end
 
-SendLoop(device['ip'], kind, bool, device['side'])
+SendLoop(device['ip'], Kind, Bool, device['side'])
 
 -- TODO
 -- split functions into single files with commands.txt as db
