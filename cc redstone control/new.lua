@@ -18,3 +18,7 @@ Index[deviceName] = {ip=ip, bool=bool, side=side}
 local data = fs.open('devices.lua ', 'w')
 data.write(textutils.serialise(Index))
 data.close()
+
+print('new device has been added to Index')
+sleep(1)
+shell.run('clear')
