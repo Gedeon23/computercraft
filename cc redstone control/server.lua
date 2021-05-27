@@ -1,7 +1,7 @@
 -- mainloop
 if not fs.exists('state.lua') then
     local initData = fs.open('state.lua', 'w')
-    initData.write('{}')
+    initData.write('{redston = {}}')
     initData.close()
 end
 
