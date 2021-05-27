@@ -52,6 +52,10 @@ end
 
 SendLoop(device['ip'], Kind, Bool, device['side'])
 
+print('finishing up')
+sleep(1)
+shell.run('clear')
+
 -- TODO
 -- split functions into single files with commands.txt as db
 -- use args instead | example at https://github.com/seriallos/computercraft/blob/master/github.lua
